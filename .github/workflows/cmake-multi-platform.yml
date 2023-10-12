@@ -13,13 +13,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
         build_type: [Release]
-        c_compiler: [gcc, clang, cl]
+        c_compiler: [gcc, clang]
         include:
-          - os: windows-latest
-            c_compiler: cl
-            cpp_compiler: cl
           - os: ubuntu-latest
             c_compiler: gcc
             cpp_compiler: g++
@@ -27,10 +24,6 @@ jobs:
             c_compiler: clang
             cpp_compiler: clang++
         exclude:
-          - os: windows-latest
-            c_compiler: gcc
-          - os: windows-latest
-            c_compiler: clang
           - os: ubuntu-latest
             c_compiler: cl
 
@@ -46,7 +39,7 @@ jobs:
     - name: Install Qt 6
       if: startsWith(matrix.os, 'ubuntu')
       run: |
-        sudo apt-get -y install qt6-default qt6-serialport
+        sudo apt-get -y install qt6-base-dev
         sudo apt-get -y install build-essential  # Install build essentials
 
     - name: Configure CMake with Qt 6
