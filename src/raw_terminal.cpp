@@ -6,6 +6,7 @@
 
 RawTerminal::RawTerminal(SenderThread *thread, QComboBox *devices)
     : m_thread(thread), m_devices(devices) {
+
   m_line_edit.setPlaceholderText("Data to send");
   m_layout_input.addWidget(&m_line_edit, true);
 
@@ -15,9 +16,14 @@ RawTerminal::RawTerminal(SenderThread *thread, QComboBox *devices)
   m_serial_output.setTextFormat(Qt::TextFormat::RichText);
   m_serial_output.setWordWrap(true);
   m_serial_output.setFont(m_mono_font);
+
   m_scroll_area.setWidget(&m_serial_output);
   m_scroll_area.setWidgetResizable(true);
   m_scroll_area.ensureWidgetVisible(&m_serial_output, 0, 0);
+
+  m_reset_line.setChecked(true);
+  m_reset_line.setText("Auto-clean");
+  m_layout_input.addWidget(&m_reset_line);
 
   m_send_btn.setText("Send");
   m_layout_input.addWidget(&m_send_btn);
@@ -58,6 +64,8 @@ void RawTerminal::send_data(void) {
   QTimer::singleShot(0, this, [&]() {
     QScrollBar *bar = m_scroll_area.verticalScrollBar();
     bar->setValue(bar->maximum());
+    if (m_reset_line.isChecked())
+      m_line_edit.setText("");
   });
   m_thread->transaction(m_devices->currentText().split(" ").at(0).trimmed(),
                         1000, m_line_edit.text() + "\r\n");

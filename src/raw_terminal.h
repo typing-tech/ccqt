@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QCheckBox>
 #include <QComboBox>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -28,6 +29,7 @@ private:
 
   QLineEdit m_line_edit;
   QPushButton m_send_btn;
+  QCheckBox m_reset_line;
 
   QScrollArea m_scroll_area;
   QLabel m_serial_output;
