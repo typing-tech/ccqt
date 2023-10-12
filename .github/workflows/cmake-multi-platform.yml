@@ -39,7 +39,7 @@ jobs:
     - name: Install Qt 6
       if: startsWith(matrix.os, 'ubuntu')
       run: |
-        sudo apt-get -y install qt6-base-dev
+        sudo apt-get -y install qt6-base-dev qt6-serialbus-dev qt6-base-dev-tools 
         sudo apt-get -y install build-essential  # Install build essentials
 
     - name: Configure CMake with Qt 6
