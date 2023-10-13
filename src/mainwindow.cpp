@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 
+#include <QHeaderView>
 #include <QtSerialPort/QSerialPortInfo>
 
 void MainWindow::set_controls_enabled(bool state) {
@@ -9,6 +10,13 @@ void MainWindow::set_controls_enabled(bool state) {
 
 MainWindow::MainWindow() : m_raw_terminal(&m_sender_thread, &m_devices) {
   refresh_serial_devices();
+
+  m_main_layout = new QVBoxLayout();
+
+  m_props_table.setModel(&m_props_model);
+  m_props_table.setItemDelegateForColumn(1, &m_delegate);
+  m_props_table.horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+  m_props_table.setSelectionMode(QAbstractItemView::SelectionMode::NoSelection);
 
   connect(&m_sender_thread, &SenderThread::response, this,
           [&](QString const &response) {
@@ -33,12 +41,13 @@ MainWindow::MainWindow() : m_raw_terminal(&m_sender_thread, &m_devices) {
           &MainWindow::refresh_serial_devices);
   m_devices_hbox_layout.addWidget(&m_refresh_devices_button);
 
-  m_main_layout.addLayout(&m_devices_hbox_layout);
+  m_main_layout->addLayout(&m_devices_hbox_layout);
 
   m_tabs.addTab(&m_raw_terminal, "Raw Serial");
-  m_main_layout.addWidget(&m_tabs);
+  m_tabs.addTab(&m_props_table, "Properties");
+  m_main_layout->addWidget(&m_tabs);
 
-  m_main_widget.setLayout(&m_main_layout);
+  m_main_widget.setLayout(m_main_layout);
   setCentralWidget(&m_main_widget);
 }
 

@@ -7,9 +7,12 @@
 #include <QMutex>
 #include <QPushButton>
 #include <QTabWidget>
+#include <QTableView>
 #include <QVBoxLayout>
 #include <QWidget>
 
+#include "configuration_table_model.h"
+#include "html_delegate.h"
 #include "raw_terminal.h"
 #include "senderthread.h"
 
@@ -24,7 +27,11 @@ public:
 protected:
   void set_controls_enabled(bool state);
 
+  HtmlDelegate m_delegate;
+
   RawTerminal m_raw_terminal;
+  ConfigurationTableModel m_props_model;
+  QTableView m_props_table;
 
   SenderThread m_sender_thread;
 
@@ -36,5 +43,5 @@ protected:
   QTabWidget m_tabs;
 
   QWidget m_main_widget;
-  QVBoxLayout m_main_layout;
+  QVBoxLayout *m_main_layout;
 };
