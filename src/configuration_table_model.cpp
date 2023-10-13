@@ -56,9 +56,13 @@ bool ConfigurationTableModel::setData(QModelIndex const &index,
   if (!index.isValid() || role != Qt::EditRole || index.column() == 0)
     return false;
 
-  QString str = value.toString();
+  QString str = value.toString().trimmed();
+  if (str.isEmpty()) {
+    params.parameters_modified[index.row()] = params.parameters[index.row()];
+    return true;
+  }
   bool ok = false;
-  int num = str.trimmed().toInt(&ok);
+  int num = str.toInt(&ok);
   if (!ok)
     return false;
   params.parameters_modified[index.row()] = num;
