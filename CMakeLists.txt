@@ -13,6 +13,7 @@ add_executable(ccqt
    src/html_delegate.cpp
    src/raw_terminal.cpp
    src/configuration_table_model.cpp
+   src/properties.cpp
    src/mainwindow.cpp
    src/main.cpp
 	 )

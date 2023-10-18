@@ -11,8 +11,9 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
-#include "configuration_table_model.h"
-#include "html_delegate.h"
+#include "params.h"
+
+#include "properties.h"
 #include "raw_terminal.h"
 #include "senderthread.h"
 
@@ -23,15 +24,13 @@ public:
   MainWindow();
 
   void refresh_serial_devices();
+  void load_parameters(int current_index = 0, int max = MESSAGES_LEN);
 
 protected:
   void set_controls_enabled(bool state);
 
-  HtmlDelegate m_delegate;
-
   RawTerminal m_raw_terminal;
-  ConfigurationTableModel m_props_model;
-  QTableView m_props_table;
+  PropertiesWidget m_properties;
 
   SenderThread m_sender_thread;
 

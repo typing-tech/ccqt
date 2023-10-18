@@ -2,12 +2,35 @@
 
 #include <cstdint>
 
-static char const *MESSAGES[] = {
+static unsigned const PARAM_IDS[] = {
+    1,  2,  3,  4,  5,  6,  7,
+
+    11, 12, 13, 14, 15, 16, 17,
+
+    21, 22, 23, 24, 25, 26,
+
+    31, 32, 33, 34, 35,
+
+    41, 42, 43,
+
+    51, 54,
+
+    61, 64,
+
+    81, 82,
+
+    83, 84, 91, 92, 93,
+};
+
+static constexpr unsigned const MESSAGES_LEN = sizeof(PARAM_IDS) / sizeof(int);
+
+static char const *MESSAGES[MESSAGES_LEN] = {
     "Enable Serial Header",
     "Enable Serial Logging",
     "Enable Serial Debugging",
     "Enable Serial Raw",
     "Enable Serial Chord",
+    "Enable Serial Keyboard",
     "Enable Serial Mouse",
 
     "Enable Usb Hid Keyboard",
@@ -27,11 +50,13 @@ static char const *MESSAGES[] = {
 
     "Enable Chording",
     "Enable Chording Character Counter Timeout",
+    "Chording Character Counter Timeout Timer",
     "Chord Detection Press Tolerance",
     "Chord Detection Release Tolerance",
 
     "Enable Spurring",
     "Enable Spurring Character Counter Timeout",
+    "Spurring Character Counter Timeout Timer",
 
     "Enable Arpeggiates",
     "Arpeggiate Tolerance",
@@ -48,8 +73,6 @@ static char const *MESSAGES[] = {
     "Enable Realtime Feedback",
     "Enable CharaChorder Ready On Startup",
 };
-
-static constexpr unsigned const MESSAGES_LEN = 36;
 
 struct Parameters {
   uint16_t parameters[MESSAGES_LEN] = {0};
